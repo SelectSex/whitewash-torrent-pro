@@ -52,6 +52,15 @@ i.reLoad {
     background-size: cover;
     transition: background .15s;
 }
+.btn.dircollapse::before {
+    content: ' ';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url(../img/collapse.png) no-repeat;
+    background-size: cover;
+    transition: background .15s;
+}
 .btn.dir:hover::before {
 
     background: url(../img/dir-active.svg) no-repeat;

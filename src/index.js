@@ -32,6 +32,9 @@ Vue.component('item', {
         },
     },
     methods: {
+        toggleFile: function() {
+            this.file.isExpanded = !this.file.isExpanded
+        },
         deleteFile: function() {
             deleteFile(this.file)
         },
@@ -155,6 +158,7 @@ function convertToFileTree(bt) {
         name: rootName,        // 新文件|目录名, 修改时以此为准
         originName: rootName,  // 原始文件|目录名
         checked: false,        // 关联视图的checkbox, 默认不选中 --这是根目录，也就是种子下载创建的第一个目录
+        isExpanded: true,      // 是否展开子内容
         length: 0,             // 文件|目录大小, 文件可直接获取此属性, 目录则需要递归计算
     }
     // files 不存在即为单文件种子
@@ -216,6 +220,7 @@ function getDir(root, pathList) {
                 children: [],                 // 目录下的子目录和文件
                 pathName: new Map,            // 目录下的 目录名=>children[]索引 哈希表, 目录树创建完毕时删除此属性
                 checked: false,               // 关联视图的checkbox, 默认不选中
+                isExpanded: true,             // 是否展开子内容
                 depth: depth++,               // btData.info.files[].path[]索引, 只有目录拥有此属性
                 btIndex: [],                  // btData.info.files[]的索引, 在目录中是数组形式
                 index: root.children.length,  // 文件|目录在其父目录中的索引
