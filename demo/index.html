@@ -73,9 +73,12 @@
                 data-toggle="collapse" 
                 :data-target="'#collapse-'+file.id" 
                 v-if="file.children"></button>
+          <button type="button" class="btn btn-secondary btn-sm" v-if="file.children" @click="dirAllSelect">全选</button>
+          <button type="button" class="btn btn-secondary btn-sm" v-if="file.children" @click="dirAllSelectCancel">全不选</button>
+          <button type="button" class="btn btn-secondary btn-sm" v-if="file.children" @click="dirAllSelectReverse">反选</button>
         <span class="input-group-text" v-else><i class="file"></i></span>
-        <span class="input-group-text" v-if="file.id !== 1">
-          <input type="checkbox" v-if="file.children" :checked="checked" @click.prevent="changeChecked">
+        <span class="input-group-text" v-if="file.id !== 0">
+          <input type="checkbox" v-if="file.children" v-model="file.checked">
           <input type="checkbox" v-else v-model="file.checked">
         </span>
       </div>

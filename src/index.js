@@ -35,10 +35,26 @@ Vue.component('item', {
         deleteFile: function() {
             deleteFile(this.file)
         },
-        changeChecked: function() {
-            let checked = this.checked
+        dirAllSelect: function() {
+            //当前文件上点击全选，将当前文件夹和当前文件夹下的文件全选
+            this.file.checked = true
             for (let i in this.file.children) {
-                this.file.children[i].checked = !checked
+                this.file.children[i].checked = true
+            }
+        },
+        dirAllSelectCancel: function() {
+            //当前文件上点击全不选，将当前文件夹和当前文件夹下的文件全不选
+            this.file.checked = false
+            for (let i in this.file.children) {
+                this.file.children[i].checked = false
+            }
+        },
+        dirAllSelectReverse: function() {
+            let checked = this.checked
+            //当前文件上点击反选，将当前文件夹和当前文件夹下的文件执行反选
+            this.file.checked = !this.file.checked
+            for (let i in this.file.children) {
+                this.file.children[i].checked = !this.file.children[i].checked
             }
         },
     },
@@ -126,7 +142,8 @@ function convertToFileTree(bt) {
         id: id++,
         name: rootName,        // 新文件|目录名, 修改时以此为准
         originName: rootName,  // 原始文件|目录名
-        length: 0,             // 文件|目录大小, 文件可直接获取此属性, 目录则需要递归计算 
+        checked: false,        // 关联视图的checkbox, 默认不选中 --这是根目录，也就是种子下载创建的第一个目录
+        length: 0,             // 文件|目录大小, 文件可直接获取此属性, 目录则需要递归计算
     }
     // files 不存在即为单文件种子
     if (bt.info.files === undefined) {
@@ -324,6 +341,7 @@ function reNameCheckedInputMD5(root) {
         if (root.checked) {
             root.name = md5(root.originName);   //文件夹没有后缀名的说法
         }
+        console.log(root)
         root.children.forEach((child) => reNameCheckedInputMD5(child))
     } else if (root.checked) {
         var suffix = root.originName.substring(root.originName.lastIndexOf("."));//.txt
