@@ -39,14 +39,18 @@ Vue.component('item', {
             //当前文件上点击全选，将当前文件夹和当前文件夹下的文件全选
             this.file.checked = true
             for (let i in this.file.children) {
-                this.file.children[i].checked = true
+                if (!this.file.children[i].children) {
+                    this.file.children[i].checked = true;
+                }
             }
         },
         dirAllSelectCancel: function() {
             //当前文件上点击全不选，将当前文件夹和当前文件夹下的文件全不选
             this.file.checked = false
             for (let i in this.file.children) {
-                this.file.children[i].checked = false
+                if (!this.file.children[i].children) {
+                    this.file.children[i].checked = false
+                 }
             }
         },
         dirAllSelectReverse: function() {
@@ -54,7 +58,9 @@ Vue.component('item', {
             //当前文件上点击反选，将当前文件夹和当前文件夹下的文件执行反选
             this.file.checked = !this.file.checked
             for (let i in this.file.children) {
-                this.file.children[i].checked = !this.file.children[i].checked
+                if (!this.file.children[i].children) {
+                    this.file.children[i].checked = !this.file.children[i].checked
+                }
             }
         },
     },
@@ -249,7 +255,7 @@ function isPaddingFile(filename) {
 /**
  * 将文件转换为占位文件
  * @param {String} filename 文件名
- * @param {Number} id 
+ * @param {Number} id
  */
 function convertToPaddingFile(filename, id=0) {
     return '_____padding_file_'+id+'_'+filename+'____'
@@ -319,7 +325,7 @@ function deleteFile(file) {
     }
     // 更新兄弟文件的索引
     for (; pIndex < parent.children.length; pIndex++) {
-        parent.children[pIndex].index -= 1 
+        parent.children[pIndex].index -= 1
     }
 }
 
@@ -373,7 +379,7 @@ function reNameCheckedInputPinYin(root) {
 
 /**
  * 将更改应用到 btData
- * @param {Object} root 
+ * @param {Object} root
  */
 function saveChange(root) {
     if (!root.parent && root.name !== root.originName) {
