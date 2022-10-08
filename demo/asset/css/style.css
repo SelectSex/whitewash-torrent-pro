@@ -40,7 +40,8 @@ i.reLoad {
     width: 16px;
     height: 16px;
     margin-right: 4px;
-    background-image: url(../img/save.svg);
+    background: url(../img/reset.png);
+    background-size: 16px 16px;
 }
 .btn.dir::before {
     content: ' ';
