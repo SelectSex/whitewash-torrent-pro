@@ -222,6 +222,11 @@ function getDir(root, pathList) {
  */
 function check (root, invert=false) {
     if (root.children) {
+        if (invert) {
+            root.checked = !root.checked
+        } else {
+            root.checked = true
+        }
         root.children.forEach((child) => check(child, invert))
     } else if (root.checked !== undefined) {
         if (invert) {
