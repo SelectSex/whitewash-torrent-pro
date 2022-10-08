@@ -112,6 +112,12 @@ var app = new Vue({
         invertCheck: function () {
             check(this.files, true)
         },
+        checkAllDir: function() {
+            checkAllDir(this.files)
+        },
+        invertCheckDir: function() {
+            checkAllDir(this.files, true)
+        },
         deleteChecked: function() {
             let delList = []
             getCheckedList(this.files, delList)
@@ -233,7 +239,7 @@ function getDir(root, pathList) {
 }
 
 /**
- * 修改所有文件(不包含目录)的 checked 属性为真
+ * 修改所有文件(包含目录)的 checked 属性为真
  * @param {Object} root 要修改的对象
  * @param {Boolean} invert 是否反选
  */
@@ -251,6 +257,22 @@ function check (root, invert=false) {
         } else {
             root.checked = true
         }
+    }
+}
+
+/**
+ * 修改所有目录的 checked 属性为真
+ * @param {Object} root 要修改的对象
+ * @param {Boolean} invert 是否反选
+ */
+function checkAllDir(root, invert=false) {
+    if (root.children) {
+        if (invert) {
+            root.checked = !root.checked
+        } else {
+            root.checked = true
+        }
+        root.children.forEach((child) => checkAllDir(child, invert))
     }
 }
 
