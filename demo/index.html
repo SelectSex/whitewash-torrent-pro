@@ -23,6 +23,9 @@
       <button type="button" class="btn btn-dark" @click="save">
         <i class="save"></i> 保存更改
       </button>
+      <button type="button" class="btn btn-dark" @click="reLoad">
+        <i class="save"></i> 重置修改
+      </button>
     </div>
     <div class="file-tree pt-3" v-show="files">
       <div class="row mb-3 tree-controls">
@@ -32,6 +35,8 @@
             <button type="button" class="btn btn-secondary btn-sm" @click="invertCheck">反选</button>
           </div>
           <button type="button" class="btn btn-danger btn-sm" @click="deleteChecked">删除选中</button>
+          <button type="button" class="btn btn-danger btn-sm" @click="reNameCheckedMD5">一键MD值洗白</button>
+          <button type="button" class="btn btn-danger btn-sm" @click="reNameCheckedPinYin">一键PinYin洗白</button>
         </div>
         <div class="col-6">
           <div class="input-group input-group-sm">

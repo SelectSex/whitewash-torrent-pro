@@ -33,6 +33,15 @@ i.save {
     margin-right: 4px;
     background-image: url(../img/save.svg);
 }
+i.reLoad {
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    background-image: url(../img/save.svg);
+}
 .btn.dir::before {
     content: ' ';
     display: inline-block;

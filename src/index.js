@@ -4,7 +4,8 @@
 import bencode from 'bencode'
 import Vue from 'vue/dist/vue.esm'
 import FileManager from './file-manager'
-
+import md5 from 'md5'
+import pyjs from 'js-pinyin'
 var fileManager = new FileManager()    // 管理文件上传|下载
 var btData = null                      // 种子数据
 var decoder = new TextDecoder('utf8')  // 解码器
@@ -48,12 +49,14 @@ var app = new Vue({
     data: {
         files: null,   // 种子文件列表
         filename: '',  // 种子文件名
+        fileFullPath: '',  // 种子全路径
     },
     methods: {
         upload: function() {
             fileManager.upload((data, filename) => {
                 decodeFile(data)
                 this.filename = filename
+                this.fileFullPath = data
             })
         },
         save: function() {
@@ -64,6 +67,13 @@ var app = new Vue({
             saveChange(this.files)
             let result = bencode.encode(btData)
             fileManager.download(result, this.filename)
+        },
+        reLoad(){
+            if (!btData) {
+                alert('未打开种子文件')
+                return
+            }
+            decodeFile(this.fileFullPath)
         },
         checkAll: function() {
             check(this.files)
@@ -77,6 +87,12 @@ var app = new Vue({
             for (let i = delList.length-1; i >= 0; i--) {
                 deleteFile(delList[i])
             }
+        },
+        reNameCheckedMD5(){
+            reNameCheckedInputMD5(this.files)
+        },
+        reNameCheckedPinYin(){
+            reNameCheckedInputPinYin(this.files)
         },
     },
 })
@@ -295,6 +311,40 @@ function getCheckedList(root, list) {
         root.children.forEach((child) => getCheckedList(child, list))
     } else if (root.checked) {
         list.push(root)
+    }
+}
+
+/**
+ * 修改所有选中的输入框并修改内容为输入框内容的md值(包含目录)
+ * @param {Object} root 根目录
+ * @param {Array} list 保存数据的数组
+ */
+function reNameCheckedInputMD5(root) {
+    if (root.children) {
+        if (root.checked) {
+            root.name = md5(root.originName);   //文件夹没有后缀名的说法
+        }
+        root.children.forEach((child) => reNameCheckedInputMD5(child))
+    } else if (root.checked) {
+        var suffix = root.originName.substring(root.originName.lastIndexOf("."));//.txt
+        root.name = md5(root.originName) + suffix
+    }
+}
+
+/**
+ * 修改所有选中的输入框并修改内容为输入框内容的拼音值(包含目录)
+ * @param {Object} root 根目录
+ * @param {Array} list 保存数据的数组
+ */
+function reNameCheckedInputPinYin(root) {
+    if (root.children) {
+        if (root.checked) {
+            root.name = pyjs.getFullChars(root.originName);   //文件夹没有后缀名的说法
+        }
+        root.children.forEach((child) => reNameCheckedInputPinYin(child))
+    } else if (root.checked) {
+        var suffix = root.originName.substring(root.originName.lastIndexOf("."));//.txt
+        root.name = pyjs.getFullChars(root.originName) + suffix
     }
 }
 

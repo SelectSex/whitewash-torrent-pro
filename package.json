@@ -20,6 +20,8 @@
     "webpack-dev-server": "^3.1.9"
   },
   "dependencies": {
+    "js-pinyin": "^0.1.9",
+    "md5": "^2.3.0",
     "vue": "^2.5.17"
   }
 }
