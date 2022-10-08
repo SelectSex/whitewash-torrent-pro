@@ -35,6 +35,12 @@ Vue.component('item', {
         deleteFile: function() {
             deleteFile(this.file)
         },
+        dirAllSelectDiGui: function() {
+            check(this.file)
+        },
+        dirAllSelectReverseDiGui: function () {
+            check(this.file, true)
+        },
         dirAllSelect: function() {
             //当前文件上点击全选，将当前文件夹和当前文件夹下的文件全选
             this.file.checked = true

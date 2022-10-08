@@ -73,8 +73,9 @@
                 data-toggle="collapse" 
                 :data-target="'#collapse-'+file.id" 
                 v-if="file.children"></button>
+          <button type="button" class="btn btn-secondary btn-sm" v-if="file.children" @click="dirAllSelectDiGui">全选(递归)</button>
+          <button type="button" class="btn btn-secondary btn-sm" v-if="file.children" @click="dirAllSelectReverseDiGui">反选(递归)</button>
           <button type="button" class="btn btn-secondary btn-sm" v-if="file.children" @click="dirAllSelect">全选</button>
-          <button type="button" class="btn btn-secondary btn-sm" v-if="file.children" @click="dirAllSelectCancel">全不选</button>
           <button type="button" class="btn btn-secondary btn-sm" v-if="file.children" @click="dirAllSelectReverse">反选</button>
         <span class="input-group-text" v-else><i class="file"></i></span>
         <span class="input-group-text" v-if="file.id !== 0">
