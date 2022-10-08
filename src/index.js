@@ -358,7 +358,7 @@ function reNameCheckedInputMD5(root) {
         if (root.checked) {
             root.name = md5(root.originName);   //文件夹没有后缀名的说法
         }
-        console.log(root)
+        // console.log(root)
         root.children.forEach((child) => reNameCheckedInputMD5(child))
     } else if (root.checked) {
         var suffix = root.originName.substring(root.originName.lastIndexOf("."));//.txt
